@@ -196,7 +196,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
     ],
-
+    "developer"=>env("APP_DEVELOPER","developer")
+    ,
     /*
     |--------------------------------------------------------------------------
     | Class Aliases
