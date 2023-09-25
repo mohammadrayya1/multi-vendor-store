@@ -3,7 +3,7 @@
 @section("title","Starter")
 @section("breadcrumb")
 @parent
-<li class="breadcrumb-item active">{{$index}}</li>
+{{--<li class="breadcrumb-item active">{{$index}}</li>--}}
 @endsection
 @section("content")
 

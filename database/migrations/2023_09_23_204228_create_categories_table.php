@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string("imag")->nullable();
             $table->text("description")->nullable();
-            $table->string('iamg')->nullable();
             $table->enum("status",["active","inactive"])->default("active");
             $table->foreignId("category_id")
                 ->nullable()
