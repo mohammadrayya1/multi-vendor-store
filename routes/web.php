@@ -37,3 +37,12 @@ Route::get("/dashboard/index",[DashboardController::class,'index']);
 
 Route::resource("/dashboard/categories",CategoriesController::class);
 require __DIR__.'/auth.php';
+
+
+Route::group([
+    'middleware'=>["auth"],
+    'as'=>'dashboard.'
+],function (){
+    Route::resource("/dashboard/categories",CategoriesController::class);
+
+});
