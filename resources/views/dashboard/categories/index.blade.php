@@ -13,13 +13,10 @@
         <a href="{{route('dashboard.categories.create')}}" class="btn btn-sm btn-outline-primary">Create</a>
     </div>
 
-    @if(session('crud'))
-    <div class="alert alert-success">
-        <ul>
-            {{ Session::get('crud') }}
-        </ul>
-    </div>
-    @endif
+    <x-alert  type="crud" />
+
+
+
     <table class="table">
         <thead>
         <tr>

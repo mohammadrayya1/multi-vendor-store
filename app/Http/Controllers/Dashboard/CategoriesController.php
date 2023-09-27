@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoriesRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class CategoriesController extends Controller
@@ -50,10 +52,24 @@ class CategoriesController extends Controller
         $data=$request->except('imag');
 
 
-       $request->validate([
-          "name"=>['required','min:5'],
-           "status"=>"required"
-       ]);
+       $request->validate(Category::rules());
+
+
+//        $validator=Validator::make($request->all(), [
+//            'name' => ['required','min:5'],
+//            'status' =>[ 'required:active,inactive'],
+//           "category_id"=>['int','exists:categories,id']
+//
+//                   ], [
+//        'name.required' => 'Please enter name or whatever you want',
+//        'status.required' => 'fill the atatus inactive or active',
+//         'category_id.int' => 'fill the category must be unique...',
+//
+//                   ]);
+//
+//        if ($validator->fails()) {
+//            return redirect()->back()->with(['error'=>$validator->errors()]);
+//                }
         $data['imag']=$this->uploadImage($request);
 //       $category=new Category();
 //       $category->slug=$request->name;
@@ -104,23 +120,24 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriesRequest $request, $id)
     {
         $request->merge(['slug'=>Str::slug($request->name)]);
         $data=$request->except('imag');
 
 
-        $request->validate([
-            "name"=>['required','min:5'],
-            "status"=>"required"
-        ]);
-            $data['imag']=$this->uploadImage($request);
+      //  $request->validate(Category::rules($id));
+
+       $new_image=$this->uploadImage($request);
+        if ($new_image){
+            $data['imag']=$new_image;
+        }
 
             $category= Category::find($id);
             $old_image=$category->imag;
             $category->update($data);
             $category->save();
-          if ($old_image && $data['imag']){
+          if ($old_image && $new_image){
               Storage::disk('uploads')->delete($old_image);
           }
 

@@ -2,7 +2,7 @@
 
 <div class="form-group mb-3">
     <label  for ="name"  >Name</label>
-    <input type="text" name="name" id="name"  value=" {{$category->name}}"  class="form-control" >
+    <input type="text" name="name" id="name"  value=" {{old("name",$category->name)}}"  class="form-control" >
 
 </div>
 @error('name')
@@ -13,7 +13,7 @@
     <select name="category_id" class="form-control  @error('parent_id') is-invalid @enderror" style="height: calc(2.8rem + 10px)" >
         <OPTION value="">No Parent </OPTION>
         @foreach ($parents as $parent)
-            <option value="{{$parent->id}}" @if($parent->id==old("parent_id",$category->category_id) )selected  @endif> {{$parent->name}} </option>
+            <option value="{{$parent->id}}" @if($parent->id==old("category_id",$category->category_id) )selected  @endif> {{$parent->name}} </option>
         @endforeach
     </select>
 </div>
@@ -24,7 +24,7 @@
 
 <div class="form-group mb-3">
     <label  for ="description"  >Description:</label>
-    <textarea name="description"   class="form-control @error("description") is-invalid  @enderror"></textarea>
+    <textarea name="description"  value="{{old("description",$category->description)}}"  class="form-control @error("description") is-invalid  @enderror"></textarea>
 
     @error("description")
     @foreach($errors->get("description") as $fehler)
@@ -50,10 +50,10 @@
     <label  for ="status"  >Status:</label>
     <div>
         <label>
-            <input type="radio" name="status" value="active" @checked($category->status == "active") >
+            <input type="radio" name="status" value="active" @checked($category->status ==old("active",$category->status)) >
                    Active</label>
         <label>
-            <input type="radio" name="status" value="inactive" @checked($category->status == "inactive") >
+            <input type="radio" name="status" value="inactive" @checked($category->status ==old("inactive",$category->status)) >
             inActive</label>
     </div>
 
