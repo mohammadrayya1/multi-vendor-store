@@ -13,7 +13,7 @@
     <select name="category_id" class="form-control  @error('parent_id') is-invalid @enderror" style="height: calc(2.8rem + 10px)" >
         <OPTION value="">No Parent </OPTION>
         @foreach ($parents as $parent)
-            <option value="{{$parent->id}}" @if($parent->id==old("category_id",$category->category_id) )selected  @endif> {{$parent->name}} </option>
+            <option value="{{$parent->id}}" @if($parent->id == old('category_id',$category->category_id) ) selected  @endif> {{$parent->name}} </option>
         @endforeach
     </select>
 </div>
@@ -50,10 +50,10 @@
     <label  for ="status"  >Status:</label>
     <div>
         <label>
-            <input type="radio" name="status" value="active" @checked($category->status ==old("active",$category->status)) >
+            <input type="radio" name="status" value="active" @checked( old('status',$category->status)=="active") >
                    Active</label>
         <label>
-            <input type="radio" name="status" value="inactive" @checked($category->status ==old("inactive",$category->status)) >
+            <input type="radio" name="status" value="inactive" @checked( old('status',$category->status) =="inactive" ) >
             inActive</label>
     </div>
 

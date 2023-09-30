@@ -16,6 +16,16 @@
     <x-alert  type="crud" />
 
 
+        <form  action="{{URL::current()}}" method="get" class="d-flex justify-content-between mb-4 ">
+            <input class="form-control mr-sm-2" type="search" name="name" placeholder="Search" aria-label="Search" :value="request('name')">
+            <select name="status" class="form-control">
+                <option value="">All</option>
+                <option value="active" @selected(request('active') =="active")>Active</option>
+                <option value="inactive" @selected(request('active') =="active")>Inactive</option>
+            </select>
+            <button class="btn btn-dark mx-2" type="submit">Filter</button>
+        </form>
+
 
     <table class="table">
         <thead>
@@ -35,7 +45,7 @@
             <td>{{$category->id}}</td>
             <td>{{$category->name}}</td>
             <td><img src="{{asset('uploads/'.$category->imag)}} " height="50"></td>
-            <td>{{$category->category_id}}</td>
+            <td>{{$category->parent_name}}</td>
             <td>{{$category->created_at}}</td>
             <td> <a href="{{route("dashboard.categories.edit",$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a></td>
             <td>
@@ -57,7 +67,8 @@
 
         </tbody>
     </table>
-
+    {{$categories->links()}}
+{{--    <x-nav-paginate number1="1" number2="2"/>--}}
 @endsection
 
 @push("style")

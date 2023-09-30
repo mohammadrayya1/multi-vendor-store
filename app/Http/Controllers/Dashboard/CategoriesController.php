@@ -20,8 +20,13 @@ class CategoriesController extends Controller
      */
     public function index()
     {
+        $request=request();
+        $categories=Category::leftJoin("categories as parents",'parents.id',"=","categories.category_id")->
+        select(["categories.*","parents.name as parent_name"])->
+        filters($request->query())->paginate(3);
 
-        $categories = Category::all();
+      //  $categories = Category::filters($request->query())->paginate(3);
+
         return  view("dashboard.categories.index",["category"=>"categories","categories"=>$categories]);
     }
 
@@ -105,8 +110,9 @@ class CategoriesController extends Controller
     public function edit($id)
     {
 
-        $categoryById=Category::find($id);
+        $categoryById=Category::findOrFail($id);
         $parents =Category::all();
+
         return view("dashboard.categories.edit",
             ['category'=>$categoryById,
             'categoryedit'=>"Category Edit",
