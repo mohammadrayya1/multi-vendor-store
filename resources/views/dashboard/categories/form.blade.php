@@ -50,10 +50,10 @@
     <label  for ="status"  >Status:</label>
     <div>
         <label>
-            <input type="radio" name="status" value="active" @checked( old('status',$category->status)=="active") >
+            <input type="radio" name="status" value="active" @checked( old('status',$category->status) == "active") >
                    Active</label>
         <label>
-            <input type="radio" name="status" value="inactive" @checked( old('status',$category->status) =="inactive" ) >
+            <input type="radio" name="status" value="inactive" @checked( old('status',$category->status) == "inactive" ) >
             inActive</label>
     </div>
 

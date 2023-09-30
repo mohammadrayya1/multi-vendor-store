@@ -21,9 +21,9 @@ class CategoriesController extends Controller
     public function index()
     {
         $request=request();
-        $categories=Category::leftJoin("categories as parents",'parents.id',"=","categories.category_id")->
-        select(["categories.*","parents.name as parent_name"])->
-        filters($request->query())->paginate(3);
+        $categories=Category::leftJoin("categories as parents",'parents.id',"=","categories.category_id")
+            ->select(["categories.*","parents.name as parent_name"])
+            ->filters($request->query())->paginate(3);
 
       //  $categories = Category::filters($request->query())->paginate(3);
 
@@ -160,10 +160,11 @@ class CategoriesController extends Controller
     {
         $category=Category::findOrFail($id);
         if($category->delete()){
-            Storage::disk('uploads')->delete($category->imag);
+           // Storage::disk('uploads')->delete($category->imag);
+           return Redirect::route("dashboard.categories.index")->with('crud', 'Category is deleted Successfully');
         }
 //       Category::destroy($id);
-        return Redirect::route("dashboard.categories.index")->with('crud', 'Category is deleted Successfully');
+        return Redirect::route("dashboard.categories.index")->with('crud', 'Category is not deleted Successfully');
     }
 
     protected function uploadImage(Request $request){
@@ -178,4 +179,19 @@ class CategoriesController extends Controller
 
     }
 
+    public function trash(){
+        $categories=Category::onlyTrashed()->paginate();
+        return view('dashboard.categories.trash')->with(['categories'=>$categories,'category'=>"Trash-Categories"]);
+    }
+
+    public function restore(Request $request,$id){
+        $category=Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        return Redirect::route('dashboard.categories.trash')->with(['crud'=>'category restored']);
+    }
+    public function deleteforce($id){
+        $category=Category::onlyTrashed()->findOrFail($id);
+        $category->forceDelete();
+        return Redirect::route('dashboard.categories.trash')->with(['crud'=>'category is deleted for ever']);
+    }
 }

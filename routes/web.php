@@ -41,9 +41,12 @@ Route::group([
     'middleware'=>["auth"],
     'as'=>'dashboard.'
 ],function (){
-    Route::resource("/dashboard/categories",CategoriesController::class);
 
-    Route::get("/dashboard/index",[DashboardController::class,'index']);
+    Route::get('/categories/trash',[CategoriesController::class,'trash'])->name('categories.trash');
+    Route::resource("/dashboard/categories",CategoriesController::class);
+    Route::put('categories/{category}/restore',[CategoriesController::class,"restore"])->name('categories.restore');
+    Route::delete('categories/{category}/forc-delete',[CategoriesController::class,"deleteforce"])->name('categories.forcedelete');
+    Route::get("/dashboard/index",[CategoriesController::class,'index']);
 
 });
 require __DIR__.'/auth.php';

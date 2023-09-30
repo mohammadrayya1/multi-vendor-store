@@ -4,6 +4,7 @@
 @section("title","Categories")
 @section("breadcrumb")
     @parent
+
     <li class="breadcrumb-item active">{{$category}}</li>
 @endsection
 
@@ -11,7 +12,9 @@
 
     <div class="mb-5 ">
         <a href="{{route('dashboard.categories.create')}}" class="btn btn-sm btn-outline-primary">Create</a>
+        <a href="{{route('dashboard.categories.trash')}}" class="btn btn-sm btn-outline-dark">Trash Categoreis </a>
     </div>
+
 
     <x-alert  type="crud" />
 

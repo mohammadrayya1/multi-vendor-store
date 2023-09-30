@@ -4,6 +4,7 @@
 @section("title","create new Category")
 @section("breadcrumb")
 @parent
+<li class="breadcrumb-item active">Categories</li>
 <li class="breadcrumb-item active">{{$Createcategory}}</li>
 @endsection
 

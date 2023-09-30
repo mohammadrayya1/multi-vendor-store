@@ -4,6 +4,7 @@
 @section("title","Edit Category")
 @section("breadcrumb")
     @parent
+    <li class="breadcrumb-item active">Categories</li>
     <li class="breadcrumb-item active">{{$categoryedit}}</li>
 @endsection
 
