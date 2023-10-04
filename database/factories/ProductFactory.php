@@ -18,7 +18,7 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $name= $this->faker->word(2,true);
+        $name= $this->faker->productName;
         return [
             'product_name'=>$name,
             'slug'=>Str::slug($name),

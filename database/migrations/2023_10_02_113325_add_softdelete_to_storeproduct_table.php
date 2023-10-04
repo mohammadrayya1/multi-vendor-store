@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('store_product', function (Blueprint $table) {
-
-            $table->primary(["id","product_id","store_id"]);
+        Schema::table('storeproduct', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -26,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('store_product', function (Blueprint $table) {
+        Schema::table('storeproduct', function (Blueprint $table) {
             //
         });
     }

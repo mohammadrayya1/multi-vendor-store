@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CategoriesController;
+use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-});
 
 
 Route::middleware('auth')->group(function () {
@@ -39,14 +37,33 @@ Route::get('/', function () {
 
 Route::group([
     'middleware'=>["auth"],
-    'as'=>'dashboard.'
+    'as'=>'dashboard.',
+    "prefix"=>'dashboard'
 ],function (){
 
     Route::get('/categories/trash',[CategoriesController::class,'trash'])->name('categories.trash');
-    Route::resource("/dashboard/categories",CategoriesController::class);
+    Route::resource("/categories",CategoriesController::class);
     Route::put('categories/{category}/restore',[CategoriesController::class,"restore"])->name('categories.restore');
     Route::delete('categories/{category}/forc-delete',[CategoriesController::class,"deleteforce"])->name('categories.forcedelete');
-    Route::get("/dashboard/index",[CategoriesController::class,'index']);
+    Route::get("/index",[CategoriesController::class,'index']);
+    Route::get("/profile",[ProfileController::class,'edit'])->name('profiles.edit');
+    Route::patch("/profile",[ProfileController::class,'update'])->name('profiles.update');
 
 });
+
+
+Route::group([
+    'middleware'=>["auth"],
+    'as'=>'dashboard.',
+    "prefix"=>'dashboard'
+],function (){
+
+    Route::resource("/products",ProductsController::class);
+
+});
+
+Route::get('dashboard',[DashboardController::class,'index']);
+
+
+
 require __DIR__.'/auth.php';

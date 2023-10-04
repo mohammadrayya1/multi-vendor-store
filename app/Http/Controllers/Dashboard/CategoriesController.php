@@ -21,11 +21,19 @@ class CategoriesController extends Controller
     public function index()
     {
         $request=request();
-        $categories=Category::leftJoin("categories as parents",'parents.id',"=","categories.category_id")
-            ->select(["categories.*","parents.name as parent_name"])
-            ->filters($request->query())->paginate(3);
+//        $categories=Category::leftJoin("categories as parents",'parents.id',"=","categories.category_id")
+//            ->select(["categories.*","parents.name as parent_name"])
+//            ->filters($request->query())->paginate(10);
+//
+//
+        $categories=Category::with("parent")
+            ->select("categories.*")
+            ->selectRaw('(select count(*) from products where category_id = categories.id) as product_count' )
+            ->filters($request->query())->paginate(10);
 
-      //  $categories = Category::filters($request->query())->paginate(3);
+
+
+        //  $categories = Category::filters($request->query())->paginate(3);
 
         return  view("dashboard.categories.index",["category"=>"categories","categories"=>$categories]);
     }
@@ -98,7 +106,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories =Category::with('products');
     }
 
     /**
@@ -147,7 +155,7 @@ class CategoriesController extends Controller
               Storage::disk('uploads')->delete($old_image);
           }
 
-            return Redirect::route("dashboard.categories.index")->with('crud', 'Category is updated Successfully');;
+            return Redirect::route("dashboard.categories.index")->with('crud', 'Category is updated Successfully');
     }
 
     /**

@@ -13,4 +13,9 @@ class Store extends Model
     protected $primaryKey="id";
     public $incrementing =true;
 
+
+    public function products(){
+        return $this->hasMany(StoreProduct::class,"store_id","id");
+    }
+
 }

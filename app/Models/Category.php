@@ -21,6 +21,10 @@ class Category extends Model
     public $incrementing =true;
 
 
+        public  function products(){
+            return $this->hasMany(Product::class,"category_id",'id');
+        }
+
     public static function scopeFilters(Builder $builder,$filters){
 
         $builder->when($filters['name']?? false,function ($builder,$value){
@@ -55,5 +59,14 @@ class Category extends Model
             'status.required' => 'fill the atatus inactive or active',
                 'category_id.int' => 'fill the category must be unique...']
         ];
+    }
+
+
+    public function parent(){
+            return $this->belongsTo(Category::Class,"category_id")->withDefault(['name'=>'--']);
+    }
+
+    public function childern(){
+            return $this->hasMany(Category::class,"category_id","id");
     }
 }

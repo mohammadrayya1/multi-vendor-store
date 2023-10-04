@@ -1,18 +1,18 @@
 
 @extends("layouts.dashboard")
 
-@section("title","Categories")
+@section("title","Products")
 @section("breadcrumb")
     @parent
 
-    <li class="breadcrumb-item active">{{$category}}</li>
+    <li class="breadcrumb-item active">{{$product}}</li>
 @endsection
 
 @section("content")
 
     <div class="mb-5 ">
-        <a href="{{route('dashboard.categories.create')}}" class="btn btn-sm btn-outline-primary">Create</a>
-        <a href="{{route('dashboard.categories.trash')}}" class="btn btn-sm btn-outline-dark">Trash Categoreis </a>
+        <a href="{{route('dashboard.products.create')}}" class="btn btn-sm btn-outline-primary">Create</a>
+
     </div>
 
 
@@ -36,25 +36,44 @@
 
             <th scope="col">Id</th>
             <th scope="col">Name</th>
-            <th scope="col">iamge</th>
-            <th scope="col">Parent</th>
-            <th scope="col">Count</th>
+            <th scope="col">Image</th>
+            <th scope="col">Category</th>
+            <th scope="col">Store</th>
             <th scope="col">Created At</th>
             <th scope="col" colspan="2" class="align-content-between">Actions</th>
         </tr>
         </thead>
         <tbody>
-        @forelse($categories as $category)
+        @forelse($products as $product)
         <tr>
-            <td>{{$category->id}}</td>
-            <td><a href="{{route('dashboard.categories.show',$category->id)}}">{{$category->name}}</a></td>
-            <td><img src="{{asset('uploads/'.$category->imag)}} " height="50"></td>
-            <td>{{$category->parent->name}}</td>
-            <td>{{$category->product_count}}</td>
-            <td>{{$category->created_at}}</td>
-            <td> <a href="{{route("dashboard.categories.edit",$category->id)}}" class="btn btn-sm btn-outline-success">Edit</a></td>
+            <td>{{$product->id}}</td>
+            <td>{{$product->product_name}}</td>
+            <td><img src="{{asset('uploads/'.$product->product_image)}} " height="50"></td>
+            <td>{{$product->category->name}}</td>
+
+{{--            <td>{{$product->stores()->first() == null ? "no store" : $product->stores()->first()->store_id}}</td>--}}
             <td>
-                <form action="{{route('dashboard.categories.destroy',$category->id)}}" method="post">
+
+                <select name="category_id" class="form-control"  >
+                    @if($product->stores()->first() == null)
+
+                        <option value="">   {{"no store"}}</option>>
+                    @else
+
+                        @foreach ($product->stores as $productwithstore)
+                            <option value="{{$productwithstore->store_id}}"> {{\App\Models\Product::getstorename($productwithstore->store_id)->first()->name}} </option>
+                        @endforeach
+                    @endif
+
+                </select>
+            </td>
+            <td>{{$product->created_at}}</td>
+
+            <td>
+                <a href="{{route("dashboard.products.edit",$product->id)}}" class="btn btn-sm btn-outline-success">Edit</a>
+            </td>
+            <td>
+                <form action="{{route('dashboard.products.destroy',$product->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
@@ -72,7 +91,7 @@
 
         </tbody>
     </table>
-    {{$categories->links()}}
+    {{$products->links()}}
 {{--    <x-nav-paginate number1="1" number2="2"/>--}}
 @endsection
 

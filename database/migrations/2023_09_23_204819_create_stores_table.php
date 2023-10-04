@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string("logo_imag")->nullable();
             $table->string('cover_imag')->nullable();
             $table->enum('status',['active','inactive',])->default('active');
-            $table->foreignId("user_id")->nullable()->constrained("users","id")->onDelete('cascade');;
             // 2 columns:created_at and updated_at (timestamp)
             $table->timestamps();
         });
