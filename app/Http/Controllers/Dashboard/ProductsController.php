@@ -122,4 +122,16 @@ class ProductsController extends Controller
     {
         //
     }
+
+
+
+    protected function uploadImage(Request $request){
+        if(!$request->product_image){
+            return;
+        }
+        $request->hasFile('product_image');
+        $file=$request->file('product_image');
+        $path= $file->store('products',['disk'=>'uploads']);
+        return $path;
+    }
 }

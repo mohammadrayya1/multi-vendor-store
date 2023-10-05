@@ -183,8 +183,6 @@ class CategoriesController extends Controller
             $file=$request->file('imag');
             $path= $file->store('categories',['disk'=>'uploads']);
           return $path;
-
-
     }
 
     public function trash(){

@@ -38,6 +38,10 @@ class Product extends Model
 
       //  return $name=Store::findOrFail($id);
     }
+    public static  function scopeActive(Builder $builder)
+    {
+        $builder->where('status', '=', 'active');
+    }
 
 //    public static function booted()
 //    {
@@ -58,4 +62,26 @@ public function tags(){
             "id"//pk related table
         );
 }
+
+
+//Accessore it should between get and Attribute
+
+            public function getImageUrlAttribute(){
+
+                    if(!$this->product_iamge){
+
+                        return "https://hedgescompany.com/wp-content/uploads/2018/09/image_coming_soon600x400.png";
+                    }
+                return asset('uploads/'.$this->product_image);
+            }
+
+
+    public function getSalePercentAttribute(){
+
+        if(!$this->compare_price){
+
+            return 0;
+        }
+        return number_format(100-(100 * $this->price/$this->compare_price),2);
+    }
 }

@@ -25,16 +25,17 @@ class Category extends Model
             return $this->hasMany(Product::class,"category_id",'id');
         }
 
-    public static function scopeFilters(Builder $builder,$filters){
+    public static function scopeFilters(Builder $builder,$filters)
+    {
 
-        $builder->when($filters['name']?? false,function ($builder,$value){
-            $builder->where('categories.name','LIKE',"%{$value}%");
+        $builder->when($filters['name'] ?? false, function ($builder, $value) {
+            $builder->where('categories.name', 'LIKE', "%{$value}%");
         });
 
-        $builder->when($filters['status'] ?? false,function ($builder,$value){
-            $builder->where('categories.status','=',$value);
-                    });
-
+        $builder->when($filters['status'] ?? false, function ($builder, $value) {
+            $builder->where('categories.status', '=', $value);
+        });
+    }
 
 //        if ($filters['name']?? false){
 //          $builder->where('name','LIKE',"%{$filters['name']}%");
@@ -42,7 +43,7 @@ class Category extends Model
 //        if ($filters['status']?? false){
 //            $builder->where('status','=',$filters['status']);
 //        }
-}
+//}
 
     public static function rules($id=0){
 
