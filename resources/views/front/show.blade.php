@@ -101,7 +101,12 @@
                                 <div class="row align-items-end">
                                     <div class="col-lg-4 col-md-4 col-12">
                                         <div class="button cart-button">
-                                            <button class="btn" style="width: 100%;">Add to Cart</button>
+                                            <form method="post" action="{{route('carts.store')}}" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" name="product_id" value={{$product->id}}>
+                                                <input type="text" name="quantity"  class="form-control">
+                                                <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-12">

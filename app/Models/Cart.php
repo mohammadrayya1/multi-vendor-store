@@ -11,7 +11,9 @@ class Cart extends Model
 {
     use HasFactory;
 
-
+protected $fillable=[
+    'cookie_id','user_id','product_id','quantity','options'
+];
 
     public static function booted(){
 //            static::creating(function (Cart $cart){
@@ -19,7 +21,7 @@ class Cart extends Model
 //            });
 
 //        OR
-        static::creating( CartObserver::class);
+        static::observe( CartObserver::class);
 
 
     }
@@ -29,7 +31,7 @@ class Cart extends Model
         return $this->belongsTo(User::class)->withDefault(["name"=>"Anonymous"]);
     }
 
-    public function products(){
+    public function product(){
         return $this->belongsTo(Product::class);
     }
 }
