@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Facades\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Repositories\Cart\CartModelRepository;
@@ -12,13 +13,20 @@ use Illuminate\Support\Facades\Redirect;
 class CartController extends Controller
 {
 
+    protected $cart;
+
+
+    public function __construct(CartRepository $cart)
+    {
+        $this->cart=$cart;
+    }
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index( CartRepository $cart)
+    public function index( Cart $cart)
     {
 
         return view('front.cart',['cart'=>$cart]);
@@ -32,7 +40,7 @@ class CartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,CartRepository $cart)
+    public function store(Request $request,Cart $cart)
     {
         $request->validate([
             'product_id'=>['required','int','exists:products,id'],
@@ -43,7 +51,7 @@ class CartController extends Controller
     if (!$request->quantity){
         $request->quantity=1;
     }
-       $cart->add($product,$request->quantity);
+       $cart::add($product,$request->quantity);
 
         return Redirect::route ("carts.index")->with('crud', 'product is added To Cart  Successfully');
 
@@ -79,15 +87,14 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CartRepository $cart)
+    public function update(Request $request,$id ,Cart $cart)
     {
         $request->validate([
-            'product_id'=>['required','int','exists:products,id'],
-            'quantity'=>['nullable','int','min:1']
+            'quantity'=>['required','int','min:1']
         ]);
 
-        $product=Product::findOrFail($request->id);
-        $cart->update( $product,$request->quantity);
+
+        $cart::update($id,$request->quantity);
     }
 
     /**
@@ -96,12 +103,10 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CartRepository $cart,$id)
+    public function destroy($id)
     {
+       $this->cart->delete($id);
 
-        $product=Product::findOrFail($id);
-
-        $cart->delete($product->id);
 
     }
 }

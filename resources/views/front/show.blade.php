@@ -84,18 +84,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-12">
-                                    <div class="form-group quantity">
-                                        <label for="color">Quantity</label>
-                                        <select class="form-control">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                        </select>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="bottom-content">
                                 <div class="row align-items-end">
@@ -104,7 +93,19 @@
                                             <form method="post" action="{{route('carts.store')}}" enctype="multipart/form-data">
                                                 @csrf
                                                 <input type="hidden" name="product_id" value={{$product->id}}>
-                                                <input type="text" name="quantity"  class="form-control">
+                                                <div class="col-lg-4 col-md-4 col-12 form-control">
+                                                    <div class="form-group quantity ">
+                                                        <label for="color">Quantity</label>
+                                                        <select name="quantity"  class="form-control">
+                                                            <option value=1>1</option>
+                                                            <option value=2>2</option>
+                                                            <option value=3>3</option>
+                                                            <option value=4>4</option>
+                                                            <option value=5>5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
                                                 <button class="btn" type="submit" style="width: 100%;">Add to Cart</button>
                                             </form>
                                         </div>

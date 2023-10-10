@@ -38,6 +38,7 @@ class Product extends Model
 
       //  return $name=Store::findOrFail($id);
     }
+
     public static  function scopeActive(Builder $builder)
     {
         $builder->where('status', '=', 'active');

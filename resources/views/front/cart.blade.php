@@ -49,7 +49,8 @@
                         </div>
 
                     </div>
-        @foreach ($cart->get() as $item)
+        @foreach ($cart::get() as $item)
+
             <!-- Cart Single List list -->
             <div class="cart-single-list">
                 <div class="row align-items-center">
@@ -66,7 +67,8 @@
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
                         <div class="count-input">
-                            <input class="form-control" value="{{ $item->quantity }}">
+                            <input class="form-control item-quantity" data-id="{{$item->product_id}}" value="{{ $item->quantity }}">
+                            {{$item->id}}
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-2 col-12">
@@ -76,8 +78,9 @@
                         <p></p>
                     </div>
                     <div class="col-lg-1 col-md-2 col-12">
-                        <a class="remove-item" href="javascript:void(0)"><i class="lni lni-close"></i></a>
+                        <a class="remove-item" data-id="{{$item->id}}" href="javascript:void(0)"><i class="lni lni-close"></i></a>
                     </div>
+
                 </div>
             </div>
             <!-- End Single List list -->
@@ -103,10 +106,10 @@
                             <div class="col-lg-4 col-md-6 col-12">
                                 <div class="right">
                                     <ul>
-                                        <li>Cart Subtotal<span>{{ \App\Helper\Currancy::format($cart->total()) }}</span></li>
+                                        <li>Cart Subtotal<span>{{ \App\Helper\Currancy::format($cart::total()) }}</span></li>
                                         <li>Shipping<span>Free</span></li>
                                         <li>You Save<span>{{ \App\Helper\Currancy::format(0) }}</span></li>
-                                        <li class="last">You Pay<span>{{ \App\Helper\Currancy::format($cart->total()) }}</span></li>
+                                        <li class="last">You Pay<span>{{ \App\Helper\Currancy::format($cart::total()) }}</span></li>
                                     </ul>
                                     <div class="button">
                                         <a href="#" class="btn">Checkout</a>
@@ -123,4 +126,13 @@
             </div>
             <!--/ End Shopping Cart -->
 
+
+        @push('script')
+            <script>
+                const csrf_token="{{csrf_token()}}";
+            </script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            <script src="{{asset('assets/js/cart.js')}}"></script>
+
+        @endpush
 </x-front-layout>
