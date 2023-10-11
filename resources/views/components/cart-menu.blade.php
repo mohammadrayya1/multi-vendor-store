@@ -17,7 +17,7 @@
                         class="lni lni-close"></i></a>
                 <div class="cart-img-head">
                     <a class="cart-img" href="product-details.html"><img
-                            src="{{$item->product->ImagUrl}}" alt="#"></a>
+                            src="{{$item->product->ImageUrl}}" alt="#"></a>
                 </div>
 
                 <div class="content">

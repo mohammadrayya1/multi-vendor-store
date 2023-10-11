@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
 //             "password"=>'password',
 //         ]);
 //       Category::factory(10)->create();
-//        Product::factory(30)->create();
+//       Product::factory(30)->create();
 //        User::factory(20)->create();
 //        Store::factory(5)->create();
 
-       $this->call(UserSeeder::class);
+      // $this->call(UserSeeder::class);
 
-    //  StoreProduct::factory(10)->create();
+    StoreProduct::factory(10)->create();
     }
 }

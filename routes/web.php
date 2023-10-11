@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\ProductsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Middleware\CheckTypeUser;
@@ -30,6 +31,12 @@ Route::get('/home/products',[ProductController::class,'index'])->name("home.prod
 Route::get('/home/products/{product:slug}',[ProductController::class,'show'])->name("home.products.show");
 
 Route::resource('/carts',CartController::class);
+
+
+
+Route::get('checkout',[CheckoutController::class,'create'])->name('create');
+Route::post('checkout',[CheckoutController::class,'store']);
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

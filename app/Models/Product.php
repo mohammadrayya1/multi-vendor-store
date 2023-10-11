@@ -69,7 +69,7 @@ public function tags(){
 
             public function getImageUrlAttribute(){
 
-                    if(!$this->product_iamge){
+                    if(!$this->product_image){
 
                         return "https://hedgescompany.com/wp-content/uploads/2018/09/image_coming_soon600x400.png";
                     }
