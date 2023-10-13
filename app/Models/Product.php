@@ -85,4 +85,23 @@ public function tags(){
         }
         return number_format(100-(100 * $this->price/$this->compare_price),2);
     }
+
+
+
+    public function products(){
+        return $this->belongsToMany(Product::class,"order_items",'order_id',"product_id",'id','id')
+            ->using(OrderItem::class)
+            ->withPivot([
+                "product_name",'price','quantity','options'
+            ]);
+    }
+
+
+    public function productsStore(){
+        return $this->belongsToMany(Product::class,"storeproduct",'store_id',"product_id",'id','id')
+            ->using(StoreProduct::class)
+            ->withPivot([
+                'name',"product_name",'price','quantity','options'
+            ]);
+    }
 }

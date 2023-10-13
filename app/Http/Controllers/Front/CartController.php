@@ -87,7 +87,7 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id ,Cart $cart)
+    public function update(Request $request, $id ,Cart $cart)
     {
         $request->validate([
             'quantity'=>['required','int','min:1']
@@ -95,6 +95,7 @@ class CartController extends Controller
 
 
         $cart::update($id,$request->quantity);
+
     }
 
     /**

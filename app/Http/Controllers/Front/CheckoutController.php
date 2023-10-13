@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Events\OrderCreated;
 use App\Facades\Cart;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -55,6 +56,8 @@ class CheckoutController extends Controller
             }
 
             DB::commit();
+            event(new OrderCreated($order));
+            return Redirect::route('home');
         } catch (Throwable $e) {
             DB::rollback();
             throw $e;
