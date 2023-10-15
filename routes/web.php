@@ -51,9 +51,9 @@ Route::get('/', function () {
 
 
 Route::group([
-    'middleware'=>["auth","checktypeuser:admin"],
+    'middleware'=>["auth:admin"],
     'as'=>'dashboard.',
-    "prefix"=>'dashboard'
+    "prefix"=>'admin/dashboard'
 ],function (){
 
     Route::get('/categories/trash',[CategoriesController::class,'trash'])->name('categories.trash');
@@ -68,9 +68,9 @@ Route::group([
 
 
 Route::group([
-    'middleware'=>["auth"],
+    'middleware'=>["auth:admin"],
     'as'=>'dashboard.',
-    "prefix"=>'dashboard'
+    "prefix"=>'admin/dashboard'
 ],function (){
 
     Route::resource("/products",ProductsController::class);
@@ -81,4 +81,4 @@ Route::get('dashboard',[DashboardController::class,'index']);
 
 
 
-require __DIR__.'/auth.php';
+//require __DIR__.'/auth.php';

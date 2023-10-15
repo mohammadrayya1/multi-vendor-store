@@ -3,8 +3,10 @@
 namespace App\Notifications;
 
 use App\Models\Order;
+use Illuminate\Broadcasting\BroadcastManager;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -31,7 +33,7 @@ class OrderCreatedNotfication extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database',"broadcast"];
             $chanel=["database"];
             if ($notifiable->notification_prerefernce["order_created"]['sms']?? false){
                 $chanel[]=["vodafon"];
@@ -81,6 +83,19 @@ class OrderCreatedNotfication extends Notification
         ];
 
     }
+
+    public  function  toBroadcast($notifiable){
+        $addr =$this->order->billingAddress;
+        return new BroadcastMessage( [
+            'body'=>"a New Order (#{$this->order->number}. created by {$addr->name}",
+            'icon'=>'fas fa-file',
+            'url'=>url("/dashboard"),
+            "order_id"=>$this->order->id
+
+        ]);
+
+    }
+
     public function toArray($notifiable)
     {
         return [

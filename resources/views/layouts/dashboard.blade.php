@@ -121,5 +121,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 @stack("script")
+
+<script>
+    const userID="{{Auth::id()}}";
+</script>
+<script src="{{asset('assets/js/app.js') }}"></script>
 </body>
 </html>

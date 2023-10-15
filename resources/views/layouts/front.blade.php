@@ -10,11 +10,22 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.svg') }}" />
 
     <!-- ========================= CSS here ========================= -->
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{asset('assets/css/LineIcons.3.0.css') }}" />
-    <link rel="stylesheet" href="{{asset('assets/css/tiny-slider.css') }}" />
-    <link rel="stylesheet" href="{{asset('assets/css/glightbox.min.css') }}" />
-    <link rel="stylesheet" href="{{asset('assets/css/main.css') }}" />
+
+
+
+
+
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/LineIcons.3.0.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}" />
+
+
+
 
 </head>
 
@@ -86,18 +97,36 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-12">
                     <div class="top-end">
-                        <div class="user">
-                            <i class="lni lni-user"></i>
-                            Hello
-                        </div>
-                        <ul class="user-login">
-                            <li>
-                                <a href="login.html">Sign In</a>
-                            </li>
-                            <li>
-                                <a href="register.html">Register</a>
-                            </li>
-                        </ul>
+
+
+                        @auth
+                            <div class="user">
+                                <i class="lni lni-user"></i>
+                                {{ Auth::user()->name }}
+                            </div>
+                            <ul class="user-login">
+                                <li>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout').submit()">Sign Out</a>
+                                </li>
+                                <form action="{{ route('logout') }}" id="logout" method="post" style="display:none">
+                                    @csrf
+                                </form>
+                            </ul>
+                        @else
+                            <div class="user">
+                                <i class="lni lni-user"></i>
+                                {{ __('Hello')}}
+                            </div>
+                            <ul class="user-login">
+                                <li>
+                                    <a href="{{ route('login') }}">{{ Lang::get('Sign In') }}</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            </ul>
+                        @endauth
+
                     </div>
                 </div>
             </div>
@@ -288,7 +317,7 @@
     </div>
     <!-- End Header Bottom -->
 </header>
-{{$breadcrumb}}
+{{ $breadcrumb ?? '' }}
 <!-- Start Call Action Area -->
 {{$slot}}
 <!-- Start Footer Area -->
@@ -444,11 +473,10 @@
 </a>
 
 <!-- ========================= JS here ========================= -->
-<script src="{{asset('assets/js/bootstrap.min.js') }}"></script>
-<script src="{{asset('assets/js/tiny-slider.js') }}"></script>
-<script src="{{asset('assets/js/glightbox.min.js') }}"></script>
-<script src="{{asset('assets/js/main.js') }}"></script>
-
+<script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
+<script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 @stack('script')
 
 </body>

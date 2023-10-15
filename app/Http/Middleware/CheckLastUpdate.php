@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -18,9 +19,12 @@ class CheckLastUpdate
     public function handle(Request $request, Closure $next)
     {
         $user=$request->user();
-        if($user){
+
+        if($request->user() instanceof \App\Models\User){
+
             $user->forceFill(['last_active_at'=>Carbon::now()])->save();
         }
         return $next($request);
     }
+
 }

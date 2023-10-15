@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Store;
 use App\Models\StoreProduct;
 use App\Models\User;
+use Database\Factories\AdminFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -33,7 +34,7 @@ class DatabaseSeeder extends Seeder
 //        Store::factory(5)->create();
 
       // $this->call(UserSeeder::class);
-
-    StoreProduct::factory(10)->create();
+        \App\Models\Admin::factory(4)->create();
+    //StoreProduct::factory(10)->create();
     }
 }
